@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import {
   View,
   Text,
@@ -22,8 +24,33 @@ import colors from "../../colors";
 
 export default function LoginScreen({ navigation }) {
   const [pass, setPass] = useState("");
+  const [email, setEmail] = useState("");
 
   const [showPass, setShowPass] = useState(false);
+
+  const handleLogin = async () => {
+    if (!email.trim() || !pass) {
+      Alert.alert("Erro", "Preencha todos os campos.");
+      return;
+    }
+
+    try {
+      const data = await AsyncStorage.getItem("dadosUsuario");
+      if (data) {
+        const user = JSON.parse(data);
+        if (user.email === email && user.pass === pass) {
+          navigation.navigate("Perfil");
+        } else {
+          Alert.alert("Erro", "Email ou senha incorretos.");
+        }
+      } else {
+        Alert.alert("Erro", "Nenhum usuário registrado.");
+      }
+    } catch (error) {
+      Alert.alert("Erro", "Erro ao tentar fazer login.");
+      console.error(error);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -43,6 +70,8 @@ export default function LoginScreen({ navigation }) {
               style={styles.input}
               placeholder="Email:"
               keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
             />
 
             <View style={extraStyles.inputContainer}>
@@ -54,18 +83,18 @@ export default function LoginScreen({ navigation }) {
                 secureTextEntry={!showPass}
               />
               <TouchableOpacity
-                style={extraStyles.showHideButton}
+                style={registerStyle.showHideButton}
                 onPress={() => setShowPass(!showPass)}
               >
                 <Feather
                   name={showPass ? "eye" : "eye-off"}
                   size={24}
-                  color="#003322"
+                  color={colors.darkGreen}
                 />
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={handleLogin}>
               <Text style={styles.buttonText}>Entrar</Text>
             </TouchableOpacity>
 

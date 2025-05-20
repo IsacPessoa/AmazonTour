@@ -13,10 +13,13 @@ import {
   Image,
 } from "react-native";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Feather } from "@expo/vector-icons";
 
 import styles from "../../styles";
 import extraStyles from "./styles";
+import { MaskedTextInput } from "react-native-mask-text";
+import colors from "../../colors";
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState("");
@@ -28,7 +31,7 @@ export default function RegisterScreen({ navigation }) {
   const [showPass, setShowPass] = useState(false);
   const [showConfPass, setShowConfPass] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name.trim() || !email.trim() || !pass) {
       Alert.alert("Erro", "Por favor, preencha os campos obrigatórios!");
       return;
@@ -38,47 +41,85 @@ export default function RegisterScreen({ navigation }) {
       return;
     }
 
-    Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
+    const userData = { name, email, cel, pass };
+
+    try {
+      await AsyncStorage.setItem("dadosUsuario", JSON.stringify(userData));
+      Alert.alert("Sucesso", "Cadastro salvo com sucesso!");
+
+      navigation.navigate("Perfil");
+
+      setName("");
+      setEmail("");
+      setCel("");
+      setPass("");
+      setConfPass("");
+    } catch (error) {
+      Alert.alert("Erro", "Falha ao salvar os dados!");
+      console.error(error);
+    }
   };
 
   return (
+    //Não deixa o teclado esconder o conteúdo atrás dele
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        {/* Ativa o scroll da tela */}
         <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 10 }}>
           <Image
             source={require("../../assets/Logo.png")}
             style={styles.image}
           />
+          {/* Campo nome */}
           <View style={[styles.container, { backgroundColor: "#fff" }]}>
             <Text style={styles.title}>Dados Cadastrais</Text>
-
-            <TextInput
-              style={styles.input}
-              placeholder="Nome:"
-              value={name}
-              onChangeText={setName}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Email:"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Telefone:"
-              value={cel}
-              onChangeText={setCel}
-              keyboardType="phone-pad"
-            />
+            <View style={{ width: "100%" }}>
+              <Text style={extraStyles.text}>
+                Nome <Text style={{ color: "red" }}>*</Text>
+              </Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Digite seu nome"
+                value={name}
+                onChangeText={setName}
+              />
+            </View>
+            {/* Campo Email */}
+            <View style={{ width: "100%" }}>
+              <Text style={extraStyles.text}>
+                Email <Text style={{ color: "red" }}>*</Text>
+              </Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Digite seu email"
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+              />
+            </View>
+            {/* Campo celular */}
+            <View style={{ width: "100%", marginBottom: 10 }}>
+              <Text style={extraStyles.text}>Celular</Text>
+              <MaskedTextInput
+                style={styles.input}
+                placeholder="(11) 11111-1111"
+                mask="(99) 99999-9999"
+                keyboardType="phone-pad"
+                value={cel}
+                onChangeText={(text, rawText) => setCel(rawText)}
+              />
+            </View>
+            {/* Campo senha */}
             <View style={extraStyles.inputContainer}>
+              <Text style={extraStyles.label}>
+                Senha <Text style={{ color: "red" }}>*</Text>
+              </Text>
               <TextInput
                 style={extraStyles.input}
-                placeholder="Senha:"
+                placeholder="digite sua senha"
                 value={pass}
                 onChangeText={setPass}
                 secureTextEntry={!showPass}
@@ -90,14 +131,18 @@ export default function RegisterScreen({ navigation }) {
                 <Feather
                   name={showPass ? "eye" : "eye-off"}
                   size={24}
-                  color="#003322"
+                  color={colors.darkGreen}
                 />
               </TouchableOpacity>
             </View>
+            {/* Campo confirmação de senha */}
             <View style={extraStyles.inputContainer}>
+              <Text style={extraStyles.label}>
+                Confirmar senha <Text style={{ color: "red" }}>*</Text>
+              </Text>
               <TextInput
                 style={extraStyles.input}
-                placeholder="Confirmar senha:"
+                placeholder="confirme sua senha"
                 value={confPass}
                 onChangeText={setConfPass}
                 secureTextEntry={!showConfPass}
@@ -109,13 +154,30 @@ export default function RegisterScreen({ navigation }) {
                 <Feather
                   name={showConfPass ? "eye" : "eye-off"}
                   size={24}
-                  color="#003322"
+                  color={colors.darkGreen}
                 />
               </TouchableOpacity>
             </View>
 
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
               <Text style={styles.buttonText}>Registrar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.button,
+                { backgroundColor: "#AA0000", marginTop: 10 },
+              ]}
+              onPress={async () => {
+                try {
+                  await AsyncStorage.clear();
+                  Alert.alert("Sucesso", "Dados removidos com sucesso!");
+                } catch (error) {
+                  Alert.alert("Erro", "Falha ao remover os dados.");
+                  console.error(error);
+                }
+              }}
+            >
+              <Text style={styles.buttonText}>Apagar Dados</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

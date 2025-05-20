@@ -21,11 +21,22 @@ export default StyleSheet.create({
     position: "absolute",
     right: 15,
     top: "50%",
-    transform: [{ translateY: -16 }],
+    transform: [{ translateY: -3 }],
     padding: 5,
   },
   showHideText: {
     fontSize: 18,
     color: colors.darkGreen,
+  },
+  text: {
+    fontSize: 16,
+    marginBottom: 5,
+    fontWeight: "500",
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
+    color: colors.softBlack,
+    fontWeight: "500",
   },
 });

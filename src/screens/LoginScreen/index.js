@@ -39,7 +39,7 @@ export default function LoginScreen({ navigation }) {
       if (data) {
         const user = JSON.parse(data);
         if (user.email === email && user.pass === pass) {
-          navigation.navigate("Perfil");
+          navigation.replace("MainTabs");
         } else {
           Alert.alert("Erro", "Email ou senha incorretos.");
         }

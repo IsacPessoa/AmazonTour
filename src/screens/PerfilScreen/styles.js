@@ -4,7 +4,7 @@ import colors from "../../colors";
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F9FC",
+    backgroundColor: colors.white,
     padding: 20,
     justifyContent: "center",
   },
@@ -12,7 +12,7 @@ export default StyleSheet.create({
     fontSize: 26,
     fontWeight: "bold",
     marginBottom: 20,
-    color: "#003322",
+    color: colors.darkGreen,
     textAlign: "center",
   },
   label: {

@@ -47,7 +47,7 @@ export default function RegisterScreen({ navigation }) {
       await AsyncStorage.setItem("dadosUsuario", JSON.stringify(userData));
       Alert.alert("Sucesso", "Cadastro salvo com sucesso!");
 
-      navigation.navigate("Perfil");
+      navigation.navigate("Login");
 
       setName("");
       setEmail("");
@@ -61,7 +61,6 @@ export default function RegisterScreen({ navigation }) {
   };
 
   return (
-    //Não deixa o teclado esconder o conteúdo atrás dele
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}

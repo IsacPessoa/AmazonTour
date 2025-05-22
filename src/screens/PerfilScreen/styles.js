@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Button, StyleSheet } from "react-native";
 import colors from "../../colors";
 
 export default StyleSheet.create({
@@ -7,6 +7,7 @@ export default StyleSheet.create({
     backgroundColor: colors.white,
     padding: 20,
     justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: 26,
@@ -28,5 +29,17 @@ export default StyleSheet.create({
     textAlign: "center",
     color: "#888",
     fontSize: 16,
+  },
+  button: {
+    backgroundColor: "red",
+    width: "50%",
+    borderRadius: 6,
+    marginTop: 15,
+  },
+  text: {
+    color: colors.white,
+    fontSize: 18,
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });

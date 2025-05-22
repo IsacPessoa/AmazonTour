@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
-import { Alert, View, Text } from "react-native";
+import { Alert, View, Text, TouchableOpacity } from "react-native";
 import profileStyle from "./styles";
 
 export default function PerfilScreen({ navigation }) {
@@ -21,6 +21,14 @@ export default function PerfilScreen({ navigation }) {
     fetchUserData();
   }, []);
 
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem("dadosUsuario");
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Login" }],
+    });
+  };
+
   if (!userData) {
     return (
       <View style={profileStyle.container}>
@@ -38,9 +46,15 @@ export default function PerfilScreen({ navigation }) {
       <Text style={profileStyle.label}>
         📧 Email: <Text style={profileStyle.value}>{userData.email}</Text>
       </Text>
-      <Text style={profileStyle.label}>
-        📱 Telefone: <Text style={profileStyle.value}>{userData.cel}</Text>
-      </Text>
+      {userData.cel ? (
+        <Text style={profileStyle.label}>
+          📱 Telefone: <Text style={profileStyle.value}>{userData.cel}</Text>
+        </Text>
+      ) : null}
+
+      <TouchableOpacity style={profileStyle.button} onPress={handleLogout}>
+        <Text style={profileStyle.text}>Sair</Text>
+      </TouchableOpacity>
     </View>
   );
 }

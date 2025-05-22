@@ -15,6 +15,12 @@ export default function HomeScreen({ navigation }) {
       image: require("../../assets/EncontroDasAguas.jpg"),
       descricao: "Confluência dos rios Negro e Solimões.",
     },
+    {
+      id: "3",
+      titulo: "Banzeiro",
+      image: require("../../assets/Banzeiro.jpg"),
+      descricao: "Restaurante renomado de comida amazônica",
+    },
   ];
 
   function renderItem({ item }) {

@@ -1,6 +1,5 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
-
+import { View, Text, Image, ScrollView } from "react-native";
 import styles from "./styles";
 
 export default function DetailsScreen({ route }) {
@@ -13,7 +12,7 @@ export default function DetailsScreen({ route }) {
   return (
     <ScrollView style={styles.container}>
       <Image source={ponto.image} style={styles.image} />
-      <Text style={styles.title}>{ponto.title}</Text>
+      <Text style={styles.title}>{ponto.titulo}</Text>
       <Text style={styles.descricao}>{ponto.descricao}</Text>
     </ScrollView>
   );

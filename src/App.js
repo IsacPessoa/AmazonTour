@@ -8,6 +8,7 @@ import PerfilScreen from "./screens/PerfilScreen";
 import HomeScreen from "./screens/HomeScreen";
 import DetailsScreen from "./screens/DetailsScreen";
 import MainTabs from "./components/MainTabs";
+import PlaceRegisterScreen from "./screens/PlaceRegisterScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,11 @@ export default function App() {
           name="Home"
           component={HomeScreen}
           options={{ headerShown: true }}
+        />
+        <Stack.Screen
+          name="PlaceRegister"
+          component={PlaceRegisterScreen}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Details"

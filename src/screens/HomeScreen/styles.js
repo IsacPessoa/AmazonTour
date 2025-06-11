@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: colors.darkGreen,
+    backgroundColor: colors.offWhite,
   },
   card: {
     padding: 6,
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
     borderRadius: 8,
     overflow: "hidden",
-    backgroundColor: colors.lightGreen,
+    backgroundColor: colors.forestGreen,
     elevation: 3,
     shadowColor: "#000",
     shadowOpacity: 0.3,
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    color: colors.darkGreen,
+    color: colors.white,
     fontWeight: "bold",
     padding: 10,
   },
@@ -44,11 +44,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 3,
     marginHorizontal: 5,
-    backgroundColor: colors.white,
+    backgroundColor: colors.gray,
   },
 
   tabButtonAtivo: {
-    backgroundColor: colors.lightGreen,
+    backgroundColor: colors.forestGreen,
   },
 
   tabTexto: {
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
 
   tabTextoAtivo: {
-    color: colors.darkGreen,
+    color: colors.white,
     fontWeight: "bold",
   },
 });

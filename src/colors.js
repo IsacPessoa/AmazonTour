@@ -5,4 +5,7 @@ export default {
   softBlack: "#1A1A1A",
   white: "#FFFFFF",
   gray: "#ccc",
+  mentaGreen: "#DFF3E3",
+  offWhite: "#FAF9F6",
+  softGreen: "#A8D5BA",
 };

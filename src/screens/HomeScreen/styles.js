@@ -4,53 +4,36 @@ import colors from "../../colors";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    paddingHorizontal: 15,
+    paddingTop: 15,
+    paddingBottom: 10,
     backgroundColor: colors.offWhite,
-  },
-  card: {
-    padding: 6,
-    marginBottom: 15,
-    marginTop: 25,
-    borderRadius: 8,
-    overflow: "hidden",
-    backgroundColor: colors.darkGreen,
-    elevation: 3,
-    shadowColor: "#000",
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 2 },
-  },
-  image: {
-    height: 200,
-    width: "100%",
-    borderRadius: 3,
-  },
-  title: {
-    fontSize: 18,
-    color: colors.mentaGreen,
-    fontWeight: "bold",
-    padding: 2,
-    paddingLeft: 6,
-    marginBottom: 6,
   },
 
   categoriasContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginBottom: 12,
-    paddingTop: 12,
+    marginBottom: 16,
+    paddingVertical: 10,
   },
 
   tabButton: {
-    paddingVertical: 6,
-    paddingHorizontal: 20,
-    borderRadius: 3,
-    marginHorizontal: 5,
+    paddingVertical: 8,
+    paddingHorizontal: 22,
+    borderRadius: 20,
+    marginHorizontal: 6,
     backgroundColor: colors.gray,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
   },
 
   tabButtonAtivo: {
     backgroundColor: colors.darkGreen,
+    shadowOpacity: 0.4,
+    elevation: 5,
   },
 
   tabTexto: {
@@ -61,19 +44,48 @@ const styles = StyleSheet.create({
 
   tabTextoAtivo: {
     color: colors.mentaGreen,
+    fontWeight: "700",
+  },
+
+  card: {
+    backgroundColor: colors.darkGreen,
+    borderRadius: 12,
+    overflow: "hidden",
+    marginBottom: 20,
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 3 },
+  },
+
+  image: {
+    height: 200,
+    width: "100%",
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+  },
+
+  title: {
+    fontSize: 20,
+    color: colors.mentaGreen,
     fontWeight: "bold",
+    paddingHorizontal: 12,
+    paddingVertical: 10,
   },
 
   emptyContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
+    paddingHorizontal: 20,
   },
+
   emptyText: {
-    fontSize: 16,
+    fontSize: 18,
     color: colors.darkGreen,
     textAlign: "center",
+    fontWeight: "600",
   },
 });
 

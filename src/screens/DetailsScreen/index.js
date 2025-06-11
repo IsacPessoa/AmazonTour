@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, Image, Button, Alert } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Alert,
+  SafeAreaView,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./styles";
 
@@ -45,7 +52,7 @@ export default function DetailsScreen({ route, navigation }) {
                   {
                     name: "MainTabs",
                     state: {
-                      index: 0, // 0 é a aba Home no seu Tab Navigator
+                      index: 0,
                       routes: [{ name: "Home" }],
                     },
                   },
@@ -80,18 +87,32 @@ export default function DetailsScreen({ route, navigation }) {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      {/* Botão Voltar simples */}
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.goBack()}
+      >
+        <Text style={styles.backButtonText}>← Voltar</Text>
+      </TouchableOpacity>
+
       <Image source={imageSource} style={styles.image} />
       <Text style={styles.title}>{ponto.titulo}</Text>
       <Text style={styles.descricao}>{ponto.descricao}</Text>
+      <View style={styles.buttonsContainer}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() =>
+            navigation.navigate("PlaceRegister", { pontoParaEditar: ponto })
+          }
+        >
+          <Text style={styles.buttonText}>Editar</Text>
+        </TouchableOpacity>
 
-      <Button
-        title="Editar"
-        onPress={() =>
-          navigation.navigate("PlaceRegister", { pontoParaEditar: ponto })
-        }
-      />
-      <Button title="Apagar" color="red" onPress={handleDelete} />
-    </View>
+        <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
+          <Text style={styles.deleteButtonText}>Apagar</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }

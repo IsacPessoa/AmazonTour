@@ -8,4 +8,5 @@ export default {
   mentaGreen: "#DFF3E3",
   offWhite: "#FAF9F6",
   softGreen: "#A8D5BA",
+  red: "#d9534f",
 };

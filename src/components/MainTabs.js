@@ -19,20 +19,20 @@ export default function MainTabs() {
             iconName = "home";
           } else if (route.name === "Perfil") {
             iconName = "user";
-          } else if (route.name === "PlaceRegister") {
+          } else if (route.name === "Adicionar") {
             iconName = "plus";
           }
           return <Feather name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: colors.softBlack,
-        tabBarInactiveTintColor: colors.offWhite,
+        tabBarInactiveTintColor: colors.mentaGreen,
         tabBarStyle: {
-          backgroundColor: colors.forestGreen,
+          backgroundColor: colors.darkGreen,
         },
         headerStyle: {
-          backgroundColor: colors.forestGreen,
+          backgroundColor: colors.darkGreen,
         },
-        headerTintColor: "#fff",
+        headerTintColor: colors.mentaGreen,
         headerTitleStyle: {
           fontWeight: "bold",
         },
@@ -43,7 +43,7 @@ export default function MainTabs() {
         component={HomeScreen}
         options={{ headerShown: true }}
       />
-      <Tab.Screen name="PlaceRegister" component={PlaceRegisterScreen} />
+      <Tab.Screen name="Adicionar" component={PlaceRegisterScreen} />
       <Tab.Screen name="Perfil" component={PerfilScreen} />
     </Tab.Navigator>
   );

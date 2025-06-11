@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
     borderRadius: 8,
     overflow: "hidden",
-    backgroundColor: colors.forestGreen,
+    backgroundColor: colors.darkGreen,
     elevation: 3,
     shadowColor: "#000",
     shadowOpacity: 0.3,
@@ -27,9 +27,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    color: colors.white,
+    color: colors.mentaGreen,
     fontWeight: "bold",
-    padding: 10,
+    padding: 2,
+    paddingLeft: 6,
+    marginBottom: 6,
   },
 
   categoriasContainer: {
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
   },
 
   tabButtonAtivo: {
-    backgroundColor: colors.forestGreen,
+    backgroundColor: colors.darkGreen,
   },
 
   tabTexto: {
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
   },
 
   tabTextoAtivo: {
-    color: colors.white,
+    color: colors.mentaGreen,
     fontWeight: "bold",
   },
 });

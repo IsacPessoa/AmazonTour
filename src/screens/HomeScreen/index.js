@@ -49,7 +49,7 @@ export default function HomeScreen({ navigation }) {
       case "caxiri":
         return require("../../assets/Caxiri.jpg");
       default:
-        return require("../../assets/TeatroAmazonas.jpg");
+        return null;
     }
   }
 
@@ -108,6 +108,15 @@ export default function HomeScreen({ navigation }) {
         data={pontosFiltrados}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
+        ListEmptyComponent={() => (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>
+              Nenhum ponto encontrado nesta categoria.
+            </Text>
+          </View>
+        )}
+        contentContainerStyle={{ flexGrow: 1 }}
+        scrollEnabled={pontosFiltrados.length > 0}
       />
     </View>
   );

@@ -6,6 +6,10 @@ import styles from "./styles";
 export default function DetailsScreen({ route, navigation }) {
   const { ponto } = route.params;
 
+  const imageSource = ponto.imageUri
+    ? { uri: ponto.imageUri }
+    : getImageFromKey(ponto.imageKey);
+
   if (!ponto) {
     return <Text>Dados do ponto não encontrados.</Text>;
   }
@@ -58,9 +62,26 @@ export default function DetailsScreen({ route, navigation }) {
     );
   };
 
+  function getImageFromKey(key) {
+    switch (key) {
+      case "teatro":
+        return require("../../assets/TeatroAmazonas.jpg");
+      case "encontro":
+        return require("../../assets/EncontroDasAguas.jpg");
+      case "banzeiro":
+        return require("../../assets/Banzeiro.jpg");
+      case "pontaNegra":
+        return require("../../assets/PontaNegra.jpg");
+      case "caxiri":
+        return require("../../assets/Caxiri.jpg");
+      default:
+        return null;
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <Image source={{ uri: ponto.imageUri }} style={styles.image} />
+      <Image source={imageSource} style={styles.image} />
       <Text style={styles.title}>{ponto.titulo}</Text>
       <Text style={styles.descricao}>{ponto.descricao}</Text>
 

@@ -26,18 +26,6 @@ export default function App() {
           component={LoginScreen}
           options={{ headerShown: false }}
         />
-        {/* <Stack.Screen
-          name="Perfil"
-          component={PerfilScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ headerShown: true }}
-        />
-        
-        */}
         <Stack.Screen
           name="MainTabs"
           component={MainTabs}

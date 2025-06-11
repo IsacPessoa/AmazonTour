@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Alert,
   ScrollView,
+  Vibration,
 } from "react-native";
 
 import { Picker } from "@react-native-picker/picker";
@@ -85,7 +86,7 @@ export default function PlaceRegisterScreen({ route, navigation }) {
       }
 
       await AsyncStorage.setItem("pontosTuristicos", JSON.stringify(pontos));
-
+      Vibration.vibrate(500);
       Alert.alert(
         "Sucesso",
         pontoParaEditar
@@ -153,11 +154,11 @@ export default function PlaceRegisterScreen({ route, navigation }) {
         )}
       </TouchableOpacity>
 
-      <Button
-        title={pontoParaEditar ? "Atualizar" : "Cadastrar"}
-        onPress={handleRegister}
-        color="#1e90ff"
-      />
+      <TouchableOpacity style={styles.button} onPress={handleRegister}>
+        <Text style={styles.buttonText}>
+          {pontoParaEditar ? "Atualizar" : "Cadastrar"}
+        </Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 }

@@ -1,10 +1,11 @@
 import { StyleSheet } from "react-native";
+import colors from "../../colors";
 
 export default StyleSheet.create({
   container: {
     padding: 20,
     alignItems: "stretch",
-    backgroundColor: "#fff",
+    backgroundColor: colors.offWhite,
     flexGrow: 1,
   },
   title: {
@@ -15,7 +16,7 @@ export default StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: colors.softGreen,
     borderRadius: 8,
     padding: 12,
     marginBottom: 15,
@@ -26,7 +27,7 @@ export default StyleSheet.create({
   },
   imagePicker: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: colors.softGreen,
     borderRadius: 8,
     height: 200,
     justifyContent: "center",
@@ -34,6 +35,34 @@ export default StyleSheet.create({
     marginBottom: 15,
     overflow: "hidden",
   },
+
+  picker: {
+    height: 50,
+    width: "100%",
+    color: colors.softBlack,
+    backgroundColor: colors.softGreen,
+    marginBottom: 8,
+  },
+
+  label: {
+    marginBottom: 8,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+
+  button: {
+    backgroundColor: colors.darkGreen,
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+
   imageText: {
     color: "#999",
   },

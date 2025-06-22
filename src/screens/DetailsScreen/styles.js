@@ -14,7 +14,7 @@ export default StyleSheet.create({
     height: 250,
     borderRadius: 16,
     marginBottom: 20,
-    shadowColor: "#000",
+    shadowColor: colors.softBlack,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.15,
     shadowRadius: 6,
@@ -34,21 +34,33 @@ export default StyleSheet.create({
     marginLeft: 10,
     marginBottom: 30,
     alignSelf: "flex-start",
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    backgroundColor: "#c8e6c9",
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    backgroundColor: colors.softGreen,
     borderRadius: 20,
-    shadowColor: "#000",
+
+    shadowColor: colors.softBlack,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 3,
     elevation: 4,
+
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  arrow: {
+    fontSize: 20,
+    color: colors.lightGreen,
+    fontWeight: "700",
+    marginRight: 8,
   },
 
   backButtonText: {
-    fontSize: 16,
-    color: "#2e7d32",
-    fontWeight: "bold",
+    fontSize: 18,
+    color: colors.forestGreen,
+    fontWeight: "700",
+    lineHeight: 24,
   },
 
   descricao: {

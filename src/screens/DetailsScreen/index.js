@@ -8,6 +8,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Feather from "react-native-vector-icons/Feather";
 import styles from "./styles";
 
 export default function DetailsScreen({ route, navigation }) {
@@ -88,12 +89,12 @@ export default function DetailsScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Botão Voltar simples */}
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.goBack()}
       >
-        <Text style={styles.backButtonText}>← Voltar</Text>
+        <Feather name="arrow-left" size={20} color="#2e7d32" />
+        <Text style={styles.backButtonText}>Voltar</Text>
       </TouchableOpacity>
 
       <Image source={imageSource} style={styles.image} />

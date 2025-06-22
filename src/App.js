@@ -9,6 +9,7 @@ import HomeScreen from "./screens/HomeScreen";
 import DetailsScreen from "./screens/DetailsScreen";
 import MainTabs from "./components/MainTabs";
 import PlaceRegisterScreen from "./screens/PlaceRegisterScreen";
+import FavoritesScreen from "./screens/FavoritosScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,7 @@ export default function App() {
           component={DetailsScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen name="Favoritos" component={FavoritesScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

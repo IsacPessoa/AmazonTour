@@ -1,13 +1,17 @@
+import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
-import { useEffect, useState, useCallback } from "react";
+import { Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import styles from "./styles";
 import { pontosTuristicosIniciais } from "../../data/pontosTuristicosDB";
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, route }) {
   const [pontosTuristicos, setPontosTuristicos] = useState([]);
   const [categoriaSelecionada, setCategoriaSelecionada] = useState("passeios");
+  const [favoritos, setFavoritos] = useState([]);
+
+  const emailUsuario = route.params?.email; // recebe email do usuário logado
 
   const carregarDados = async () => {
     try {
@@ -26,13 +30,27 @@ export default function HomeScreen({ navigation }) {
     }
   };
 
+  const carregarFavoritos = async () => {
+    try {
+      const dados = await AsyncStorage.getItem(`favoritos_${emailUsuario}`);
+      if (dados) {
+        setFavoritos(JSON.parse(dados));
+      } else {
+        setFavoritos([]);
+      }
+    } catch (error) {
+      console.log("Erro ao carregar favoritos:", error);
+    }
+  };
+
   useEffect(() => {
-    carregarDados(); // apenas na primeira vez que a tela é montada
+    carregarDados();
   }, []);
 
   useFocusEffect(
     useCallback(() => {
-      carregarDados(); // toda vez que a tela voltar a estar em foco
+      carregarDados();
+      carregarFavoritos();
     }, [])
   );
 
@@ -57,6 +75,25 @@ export default function HomeScreen({ navigation }) {
     (ponto) => ponto.categoria === categoriaSelecionada
   );
 
+  const isFavorito = (id) => {
+    return favoritos.some((fav) => fav.id === id);
+  };
+
+  // Função para alternar favorito
+  const toggleFavorito = async (ponto) => {
+    let novosFavoritos;
+    if (isFavorito(ponto.id)) {
+      novosFavoritos = favoritos.filter((fav) => fav.id !== ponto.id);
+    } else {
+      novosFavoritos = [...favoritos, ponto];
+    }
+    setFavoritos(novosFavoritos);
+    await AsyncStorage.setItem(
+      `favoritos_${emailUsuario}`,
+      JSON.stringify(novosFavoritos)
+    );
+  };
+
   function renderItem({ item }) {
     const imageSource = item.imageUri
       ? { uri: item.imageUri }
@@ -76,6 +113,16 @@ export default function HomeScreen({ navigation }) {
       >
         <Text style={styles.title}>{item.titulo}</Text>
         <Image source={imageSource} style={styles.image} />
+        <TouchableOpacity
+          style={{ position: "absolute", top: 10, right: 10 }}
+          onPress={() => toggleFavorito(item)}
+        >
+          <Feather
+            name="heart"
+            size={24}
+            color={isFavorito(item.id) ? "red" : "gray"}
+          />
+        </TouchableOpacity>
       </TouchableOpacity>
     );
   }

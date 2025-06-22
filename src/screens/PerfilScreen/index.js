@@ -111,10 +111,10 @@ export default function PerfilScreen({ navigation }) {
         </View>
 
         <TouchableOpacity
-          style={profileStyle.secondaryButton}
+          style={profileStyle.favoriteButton}
           onPress={goToFavorites}
         >
-          <Text style={profileStyle.secondaryButtonText}>Favoritos</Text>
+          <Text style={profileStyle.favoriteButtonText}>Favoritos</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

@@ -1,22 +1,44 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
+import * as Animatable from "react-native-animatable";
 import styles from "./styles";
+
+const AnimatedView = Animatable.createAnimatableComponent(View);
 
 export default function FavoritosScreen({ navigation, route }) {
   const [favoritos, setFavoritos] = useState([]);
+  const [animarLista, setAnimarLista] = useState(false);
   const emailUsuario = route.params?.email;
 
   const carregarFavoritos = async () => {
     try {
-      const dados = await AsyncStorage.getItem(`favoritos_${emailUsuario}`);
-      if (dados) {
-        setFavoritos(JSON.parse(dados));
-      } else {
-        setFavoritos([]);
+      const dadosFavoritos = await AsyncStorage.getItem(
+        `favoritos_${emailUsuario}`
+      );
+      const dadosPontos = await AsyncStorage.getItem("pontosTuristicos");
+
+      const favoritosSalvos = dadosFavoritos ? JSON.parse(dadosFavoritos) : [];
+      const pontos = dadosPontos ? JSON.parse(dadosPontos) : [];
+
+      const favoritosAtualizados = favoritosSalvos
+        .map((fav) => pontos.find((ponto) => ponto.id === fav.id))
+        .filter(Boolean);
+
+      setFavoritos(favoritosAtualizados);
+
+      if (
+        JSON.stringify(favoritosAtualizados) !== JSON.stringify(favoritosSalvos)
+      ) {
+        await AsyncStorage.setItem(
+          `favoritos_${emailUsuario}`,
+          JSON.stringify(favoritosAtualizados)
+        );
       }
+
+      setAnimarLista(true);
     } catch (error) {
       console.log("Erro ao carregar favoritos:", error);
     }
@@ -36,32 +58,33 @@ export default function FavoritosScreen({ navigation, route }) {
         `favoritos_${emailUsuario}`,
         JSON.stringify(novosFavoritos)
       );
+      setAnimarLista(true);
     } catch (error) {
       console.log("Erro ao remover favorito:", error);
     }
   };
 
+  function getImageFromKey(key) {
+    switch (key) {
+      case "teatro":
+        return require("../../assets/TeatroAmazonas.jpg");
+      case "encontro":
+        return require("../../assets/EncontroDasAguas.jpg");
+      case "banzeiro":
+        return require("../../assets/Banzeiro.jpg");
+      case "pontaNegra":
+        return require("../../assets/PontaNegra.jpg");
+      case "caxiri":
+        return require("../../assets/Caxiri.jpg");
+      default:
+        return null;
+    }
+  }
+
   function renderItem({ item }) {
     const imageSource = item.imageUri
       ? { uri: item.imageUri }
-      : item.imageKey
-      ? (() => {
-          switch (item.imageKey) {
-            case "teatro":
-              return require("../../assets/TeatroAmazonas.jpg");
-            case "encontro":
-              return require("../../assets/EncontroDasAguas.jpg");
-            case "banzeiro":
-              return require("../../assets/Banzeiro.jpg");
-            case "pontaNegra":
-              return require("../../assets/PontaNegra.jpg");
-            case "caxiri":
-              return require("../../assets/Caxiri.jpg");
-            default:
-              return null;
-          }
-        })()
-      : null;
+      : getImageFromKey(item.imageKey);
 
     return (
       <TouchableOpacity
@@ -81,7 +104,7 @@ export default function FavoritosScreen({ navigation, route }) {
           style={{ position: "absolute", top: 10, right: 10 }}
           onPress={() => removerFavorito(item.id)}
         >
-          <Feather name="heart" size={24} color="red" />
+          <FontAwesome name="heart" size={24} color="red" />
         </TouchableOpacity>
       </TouchableOpacity>
     );
@@ -89,18 +112,26 @@ export default function FavoritosScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={favoritos}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-        ListEmptyComponent={() => (
-          <View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>Você não possui favoritos.</Text>
-          </View>
-        )}
-        contentContainerStyle={{ flexGrow: 1 }}
-        scrollEnabled={favoritos.length > 0}
-      />
+      <AnimatedView
+        animation={animarLista ? "fadeInUp" : undefined}
+        duration={600}
+        onAnimationEnd={() => setAnimarLista(false)}
+        useNativeDriver
+        style={{ flex: 1 }}
+      >
+        <FlatList
+          data={favoritos}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+          ListEmptyComponent={() => (
+            <View style={styles.emptyContainer}>
+              <Text style={styles.emptyText}>Você não possui favoritos.</Text>
+            </View>
+          )}
+          contentContainerStyle={{ flexGrow: 1 }}
+          scrollEnabled={favoritos.length > 0}
+        />
+      </AnimatedView>
     </View>
   );
 }

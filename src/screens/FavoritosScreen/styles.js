@@ -4,7 +4,7 @@ import colors from "../../colors";
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     paddingHorizontal: 16,
     paddingTop: 16,
   },
@@ -20,15 +20,15 @@ export default StyleSheet.create({
   },
   emptyText: {
     fontSize: 18,
-    color: "#999",
+    color: colors.gray,
   },
   card: {
-    backgroundColor: "#f9f9f9",
+    backgroundColor: colors.offWhite,
     borderRadius: 12,
     padding: 12,
     marginBottom: 16,
-    elevation: 3, // sombra Android
-    shadowColor: "#000", // sombra iOS
+    elevation: 3,
+    shadowColor: colors.softBlack,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -37,7 +37,7 @@ export default StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#333",
+    color: colors.darkGreen,
     marginBottom: 8,
   },
   image: {
@@ -52,15 +52,8 @@ export default StyleSheet.create({
     right: 10,
     padding: 6,
   },
-  clearButton: {
-    backgroundColor: colors.red || "#ff4d4d",
-    padding: 14,
-    margin: 16,
-    borderRadius: 8,
-    alignItems: "center",
-  },
   clearButtonText: {
-    color: "#fff",
+    color: colors.white,
     fontWeight: "bold",
     fontSize: 16,
   },

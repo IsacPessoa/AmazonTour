@@ -113,7 +113,7 @@ export default StyleSheet.create({
   },
 
   secondaryButton: {
-    backgroundColor: colors.lightGreen,
+    backgroundColor: colors.red,
     paddingVertical: 12,
     paddingHorizontal: 32,
     borderRadius: 8,
@@ -123,6 +123,23 @@ export default StyleSheet.create({
   },
 
   secondaryButtonText: {
+    color: colors.white,
+    fontSize: 16,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+
+  favoriteButton: {
+    backgroundColor: colors.softGreen,
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 8,
+    width: "60%",
+    alignSelf: "center",
+    marginBottom: 34,
+  },
+
+  favoriteButtonText: {
     color: colors.softBlack,
     fontSize: 16,
     textAlign: "center",
@@ -130,7 +147,7 @@ export default StyleSheet.create({
   },
 
   deleteButton: {
-    backgroundColor: "#D9534F", // vermelho estilo bootstrap danger
+    backgroundColor: colors.red,
     paddingVertical: 12,
     paddingHorizontal: 32,
     borderRadius: 8,

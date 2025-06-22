@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import {
   View,
   Text,
@@ -14,18 +13,14 @@ import {
   Keyboard,
   Image,
 } from "react-native";
-
 import { Feather } from "@expo/vector-icons";
 
-import styles from "../../styles";
-import extraStyles from "../RegisterScreen/styles";
-import registerStyle from "./styles";
+import styles from "./styles"; // Atualizei para styles para manter padrão com o card
 import colors from "../../colors";
 
 export default function LoginScreen({ navigation }) {
   const [pass, setPass] = useState("");
   const [email, setEmail] = useState("");
-
   const [showPass, setShowPass] = useState(false);
 
   const handleLogin = async () => {
@@ -54,54 +49,55 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
+      style={styles.keyboardView}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 10 }}>
-          <Image
-            source={require("../../assets/Logo.png")}
-            style={styles.image}
-          />
-          <View style={[styles.container, { backgroundColor: colors.white }]}>
-            <Text style={styles.title}>Login</Text>
-
-            <TextInput
-              style={styles.input}
-              placeholder="Email:"
-              keyboardType="email-address"
-              value={email}
-              onChangeText={setEmail}
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.container}>
+            <Image
+              source={require("../../assets/Logo.png")}
+              style={styles.image}
             />
 
-            <View style={extraStyles.inputContainer}>
+            <View style={styles.card}>
+              <Text style={styles.title}>Login</Text>
+
               <TextInput
-                style={extraStyles.input}
-                placeholder="Senha:"
-                value={pass}
-                onChangeText={setPass}
-                secureTextEntry={!showPass}
+                style={styles.input}
+                placeholder="Email:"
+                keyboardType="email-address"
+                value={email}
+                onChangeText={setEmail}
+                autoCapitalize="none"
               />
-              <TouchableOpacity
-                style={registerStyle.showHideButton}
-                onPress={() => setShowPass(!showPass)}
-              >
-                <Feather
-                  name={showPass ? "eye" : "eye-off"}
-                  size={24}
-                  color={colors.darkGreen}
+
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.passwordInput}
+                  placeholder="Senha:"
+                  value={pass}
+                  onChangeText={setPass}
+                  secureTextEntry={!showPass}
                 />
+                <TouchableOpacity onPress={() => setShowPass(!showPass)}>
+                  <Feather
+                    name={showPass ? "eye" : "eye-off"}
+                    size={24}
+                    color={colors.darkGreen}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                <Text style={styles.buttonText}>Entrar</Text>
+              </TouchableOpacity>
+
+              <Text style={styles.text}>Não tem uma conta?</Text>
+              <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+                <Text style={styles.registerText}>Cadastre-se aqui!</Text>
               </TouchableOpacity>
             </View>
-
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
-              <Text style={styles.buttonText}>Entrar</Text>
-            </TouchableOpacity>
-
-            <Text style={styles.text}>Não tem uma conta?</Text>
-            <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-              <Text style={registerStyle.registerText}>Registre-se aqui!</Text>
-            </TouchableOpacity>
           </View>
         </ScrollView>
       </TouchableWithoutFeedback>

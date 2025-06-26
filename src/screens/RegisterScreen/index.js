@@ -16,8 +16,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Feather } from "@expo/vector-icons";
 
-import styles from "../../styles";
-import extraStyles from "./styles";
+import styles from "./styles";
 import { MaskedTextInput } from "react-native-mask-text";
 import colors from "../../colors";
 
@@ -36,6 +35,7 @@ export default function RegisterScreen({ navigation }) {
       Alert.alert("Erro", "Por favor, preencha os campos obrigatórios!");
       return;
     }
+
     if (pass !== confPass) {
       Alert.alert("Erro", "As senhas não coincidem!");
       return;
@@ -45,8 +45,7 @@ export default function RegisterScreen({ navigation }) {
 
     try {
       await AsyncStorage.setItem("dadosUsuario", JSON.stringify(userData));
-      Alert.alert("Sucesso", "Cadastro salvo com sucesso!");
-
+      Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
       navigation.navigate("Login");
 
       setName("");
@@ -55,129 +54,119 @@ export default function RegisterScreen({ navigation }) {
       setPass("");
       setConfPass("");
     } catch (error) {
-      Alert.alert("Erro", "Falha ao salvar os dados!");
+      Alert.alert("Erro", "Erro ao salvar os dados.");
+      console.error(error);
+    }
+  };
+
+  const clearStorage = async () => {
+    try {
+      await AsyncStorage.clear();
+      Alert.alert("Sucesso", "Todos os dados foram apagados!");
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível apagar os dados.");
       console.error(error);
     }
   };
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
+      style={styles.keyboardView}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        {/* Ativa o scroll da tela */}
-        <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 10 }}>
-          <Image
-            source={require("../../assets/Logo.png")}
-            style={styles.image}
-          />
-          {/* Campo nome */}
-          <View style={[styles.container, { backgroundColor: "#fff" }]}>
-            <Text style={styles.title}>Dados Cadastrais</Text>
-            <View style={{ width: "100%" }}>
-              <Text style={extraStyles.text}>
-                Nome <Text style={{ color: "red" }}>*</Text>
-              </Text>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.container}>
+            <Image
+              source={require("../../assets/Logo.png")}
+              style={styles.image}
+            />
+
+            <View style={styles.card}>
+              <Text style={styles.title}>Cadastro</Text>
+
               <TextInput
                 style={styles.input}
-                placeholder="Digite seu nome"
+                placeholder="Nome:"
                 value={name}
                 onChangeText={setName}
               />
-            </View>
-            {/* Campo Email */}
-            <View style={{ width: "100%" }}>
-              <Text style={extraStyles.text}>
-                Email <Text style={{ color: "red" }}>*</Text>
-              </Text>
+
               <TextInput
                 style={styles.input}
-                placeholder="Digite seu email"
+                placeholder="Email:"
+                keyboardType="email-address"
                 value={email}
                 onChangeText={setEmail}
-                keyboardType="email-address"
               />
-            </View>
-            {/* Campo celular */}
-            <View style={{ width: "100%", marginBottom: 10 }}>
-              <Text style={extraStyles.text}>Celular</Text>
+
               <MaskedTextInput
                 style={styles.input}
-                placeholder="(11) 11111-1111"
+                placeholder="Celular:"
                 mask="(99) 99999-9999"
                 keyboardType="phone-pad"
                 value={cel}
                 onChangeText={(text, rawText) => setCel(rawText)}
               />
-            </View>
-            {/* Campo senha */}
-            <View style={extraStyles.inputContainer}>
-              <Text style={extraStyles.label}>
-                Senha <Text style={{ color: "red" }}>*</Text>
-              </Text>
-              <TextInput
-                style={extraStyles.input}
-                placeholder="digite sua senha"
-                value={pass}
-                onChangeText={setPass}
-                secureTextEntry={!showPass}
-              />
-              <TouchableOpacity
-                style={extraStyles.showHideButton}
-                onPress={() => setShowPass(!showPass)}
-              >
-                <Feather
-                  name={showPass ? "eye" : "eye-off"}
-                  size={24}
-                  color={colors.darkGreen}
-                />
-              </TouchableOpacity>
-            </View>
-            {/* Campo confirmação de senha */}
-            <View style={extraStyles.inputContainer}>
-              <Text style={extraStyles.label}>
-                Confirmar senha <Text style={{ color: "red" }}>*</Text>
-              </Text>
-              <TextInput
-                style={extraStyles.input}
-                placeholder="confirme sua senha"
-                value={confPass}
-                onChangeText={setConfPass}
-                secureTextEntry={!showConfPass}
-              />
-              <TouchableOpacity
-                style={extraStyles.showHideButton}
-                onPress={() => setShowConfPass(!showConfPass)}
-              >
-                <Feather
-                  name={showConfPass ? "eye" : "eye-off"}
-                  size={24}
-                  color={colors.darkGreen}
-                />
-              </TouchableOpacity>
-            </View>
 
-            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-              <Text style={styles.buttonText}>Registrar</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.button,
-                { backgroundColor: "#AA0000", marginTop: 10 },
-              ]}
-              onPress={async () => {
-                try {
-                  await AsyncStorage.clear();
-                  Alert.alert("Sucesso", "Dados removidos com sucesso!");
-                } catch (error) {
-                  Alert.alert("Erro", "Falha ao remover os dados.");
-                  console.error(error);
-                }
-              }}
-            >
-              <Text style={styles.buttonText}>Apagar Dados</Text>
-            </TouchableOpacity>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Senha:"
+                  value={pass}
+                  onChangeText={setPass}
+                  secureTextEntry={!showPass}
+                />
+                <TouchableOpacity
+                  style={styles.showHideButton}
+                  onPress={() => setShowPass(!showPass)}
+                >
+                  <Feather
+                    name={showPass ? "eye" : "eye-off"}
+                    size={24}
+                    color={colors.darkGreen}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Confirmar senha:"
+                  value={confPass}
+                  onChangeText={setConfPass}
+                  secureTextEntry={!showConfPass}
+                />
+                <TouchableOpacity
+                  style={styles.showHideButton}
+                  onPress={() => setShowConfPass(!showConfPass)}
+                >
+                  <Feather
+                    name={showConfPass ? "eye" : "eye-off"}
+                    size={24}
+                    color={colors.darkGreen}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                <Text style={styles.buttonText}>Registrar</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.button, styles.clearButton]}
+                onPress={clearStorage}
+              >
+                <Text style={[styles.buttonText, styles.clearButtonText]}>
+                  Apagar todos os dados
+                </Text>
+              </TouchableOpacity>
+
+              <Text style={styles.text}>Já tem uma conta?</Text>
+              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                <Text style={styles.registerText}>Voltar ao login</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </ScrollView>
       </TouchableWithoutFeedback>
